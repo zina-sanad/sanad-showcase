@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANAD — AI Student Nutrition Companion | Founded by Zina</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Cairo for Bilingual Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        },
+                        mint: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            600: '#16a34a',
+                            800: '#065f46',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Cairo', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        /* Custom Range Slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #ccfbf1;
+            height: 0.55rem;
+            border-radius: 9999px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #0d9488;
+            height: 1.35rem;
+            width: 1.35rem;
+            border-radius: 9999px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(13, 148, 136, 0.4);
+            transition: transform 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-mint-50 via-white to-brand-50">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-brand-100 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-600 to-mint-800 flex items-center justify-center text-white shadow-md">
+                    <i data-lucide="leaf" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-extrabold text-xl tracking-tight text-brand-800">SANAD</span>
+                        <span class="hidden sm:inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">Imagine Cup</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium" data-i18n="founderHeader">Founded by Zina</p>
+                </div>
+            </div>
+
+            <!-- Language Switcher -->
+            <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 transition active:scale-95">
+                <i data-lucide="globe" class="w-4 h-4 text-brand-600"></i>
+                <span id="langLabel">العربية</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Showcase Banner -->
+    <section class="max-w-5xl mx-auto w-full px-4 pt-6 pb-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-100 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-48 h-48 bg-brand-50 rounded-full -mr-16 -mt-16 opacity-60 pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="max-w-2xl">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-mint-50 border border-mint-100 text-mint-800 text-xs font-semibold mb-3">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-600"></i>
+                        <span data-i18n="techBadge">Powered by Microsoft Azure AI, Copilot Studio & Power Apps</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight mb-2" data-i18n="heroTitle">
+                        Making Healthy Eating Flavorful, Filling, and Affordable.
+                    </h1>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4" data-i18n="heroDesc">
+                        An AI-powered student nutrition companion that builds effortless morning fruit habits and matches strict student budgets with delicious, hidden-veggie meals.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-brand-800">
+                        <span class="px-3 py-1.5 rounded-xl bg-brand-50 border border-brand-200 flex items-center gap-1.5">
+                            <i data-lucide="award" class="w-4 h-4 text-brand-600"></i>
+                            <span data-i18n="founderCredit">Project Lead & Founder: Zina</span>
+                        </span>
+                        <span class="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center gap-1.5">
+                            <i data-lucide="tag" class="w-4 h-4 text-amber-600"></i>
+                            <span data-i18n="savingsBadge">Up to 50% Student Savings</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Main Mode Switcher Tabs -->
+                <div class="flex md:flex-col gap-2 bg-slate-100 p-1.5 rounded-2xl shrink-0">
+                    <button id="tabDemoBtn" onclick="switchMainView('demo')" class="flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-brand-600 text-white shadow-sm transition">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        <span data-i18n="tabDemo">Interactive App Demo</span>
+                    </button>
+                    <button id="tabVisionBtn" onclick="switchMainView('vision')" class="flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 text-slate-700 hover:bg-white/70 transition">
+                        <i data-lucide="layers" class="w-4 h-4"></i>
+                        <span data-i18n="tabVision">Project Vision & Tech</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-5xl mx-auto w-full px-4 pb-16 flex-1">
+
+        <!-- VIEW 1: INTERACTIVE APP DEMO (4-Stage Student User Journey) -->
+        <div id="demoView" class="fade-in space-y-6">
+            
+            <!-- Mobile App Frame Wrapper on Desktop -->
+            <div class="max-w-2xl mx-auto bg-white rounded-[2rem] border-2 border-brand-100 shadow-xl overflow-hidden">
+                
+                <!-- App Status Header -->
+                <div class="bg-gradient-to-r from-brand-700 to-mint-800 text-white px-6 py-5">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-brand-100" data-i18n="appJourneyLabel">Student Daily Journey</span>
+                        <span class="text-xs bg-white/15 px-2.5 py-1 rounded-full font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                            <span data-i18n="aiActive">Azure AI Active</span>
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-bold" data-i18n="appWelcome">Good Morning, Student! 👋</h2>
+                    <p class="text-xs text-brand-100 mt-0.5" data-i18n="appSub">Your smart, budget-friendly nutrition plan for today.</p>
+                </div>
+
+                <div class="p-5 sm:p-6 space-y-6 bg-slate-50/60">
+
+                    <!-- STAGE 1: MORNING BOOST SCREEN (7:30 AM) -->
+                    <div class="bg-white rounded-2xl p-5 border border-brand-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
+                                <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-500"></i>
+                                <span data-i18n="stage1Time">Stage 1 • 7:30 AM — Morning Boost</span>
+                            </span>
+                            <button onclick="cycleFruit()" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center gap-1">
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                                <span data-i18n="changeFruit">Switch Fruit</span>
+                            </button>
+                        </div>
+
+                        <div class="flex items-start gap-4 bg-mint-50/70 p-4 rounded-2xl border border-mint-100 mb-4">
+                            <div id="fruitEmoji" class="text-4xl bg-white w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm shrink-0">🍌</div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h3 id="fruitName" class="font-bold text-slate-900 text-base">Today's Pick: Fresh Banana</h3>
+                                    <span id="fruitCost" class="text-xs font-bold text-mint-800 bg-mint-100 px-2 py-0.5 rounded-md">~$0.25</span>
+                                </div>
+                                <p class="text-xs font-semibold text-brand-700 mt-1" data-i18n="whyMattersLabel">Why it matters today:</p>
+                                <p id="fruitBenefit" class="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                                    Slow-release natural energy & potassium to prevent mid-morning fatigue during long lectures.
+                                </p>
+                            </div>
+                        </div>
+
+                        <button id="fruitDoneBtn" onclick="completeMorningFruit()" class="w-full py-3.5 px-4 rounded-xl font-bold text-sm bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition flex items-center justify-center gap-2 active:scale-[0.99]">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                            <span id="fruitBtnText" data-i18n="fruitBtn">Done, I had my morning fruit</span>
+                        </button>
+                    </div>
+
+                    <!-- STAGE 2 & 3: SMART CRAVING & BUDGET MATCHER + ORDER/DIY (12:30 PM) -->
+                    <div class="bg-white rounded-2xl p-5 border border-brand-100 shadow-sm space-y-5">
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200 mb-2">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-600"></i>
+                                <span data-i18n="stage2Time">Stages 2 & 3 • 12:30 PM — Craving & Budget Matcher</span>
+                            </span>
+                            <h3 class="text-lg font-extrabold text-slate-900" data-i18n="matcherTitle">What are you craving right now?</h3>
+                        </div>
+
+                        <!-- Craving Selector Pills -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="selectCraving('crunchy')" id="craving-crunchy" class="craving-pill p-3 rounded-xl border-2 border-brand-600 bg-brand-50 text-brand-900 text-xs font-bold flex flex-col items-center gap-1.5 transition">
+                                <span class="text-xl">🥨</span>
+                                <span data-i18n="craveCrunchy">Crunchy & Savory</span>
+                            </button>
+                            <button onclick="selectCraving('filling')" id="craving-filling" class="craving-pill p-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-bold flex flex-col items-center gap-1.5 transition">
+                                <span class="text-xl">🌯</span>
+                                <span data-i18n="craveFilling">Warm & Filling</span>
+                            </button>
+                            <button onclick="selectCraving('energy')" id="craving-energy" class="craving-pill p-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-bold flex flex-col items-center gap-1.5 transition">
+                                <span class="text-xl">⚡</span>
+                                <span data-i18n="craveEnergy">Quick Energy</span>
+                            </button>
+                        </div>
+
+                        <!-- Budget Slider -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                            <div class="flex items-center justify-between mb-2">
+                                <label for="budgetSlider" class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                                    <i data-lucide="wallet" class="w-4 h-4 text-brand-600"></i>
+                                    <span data-i18n="budgetLabel">Max Student Budget:</span>
+                                </label>
+                                <span id="budgetDisplay" class="text-base font-extrabold text-brand-700 bg-white px-3 py-0.5 rounded-lg border border-brand-200 shadow-xs">$2.50</span>
+                            </div>
+                            <input id="budgetSlider" type="range" min="1.0" max="5.0" step="0.5" value="2.5" oninput="updateBudget(this.value)" class="w-full">
+                            <div class="flex justify-between text-[11px] font-medium text-slate-400 mt-1">
+                                <span>$1.00 (Ultra-Saver)</span>
+                                <span>$3.00</span>
+                                <span>$5.00</span>
+                            </div>
+                        </div>
+
+                        <!-- AI Recommended Meals Container -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n="aiMatchesHeader">AI Matched Healthy Meals</span>
+                                <span id="matchCountBadge" class="text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-full">2 Matches</span>
+                            </div>
+                            <div id="mealsContainer" class="space-y-4">
+                                <!-- Meals injected dynamically via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STAGE 4: WEEKLY HABIT & HIDDEN VEGGIES TRACKER -->
+                    <div class="bg-white rounded-2xl p-5 border border-brand-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-mint-800 bg-mint-50 px-2.5 py-1 rounded-lg border border-mint-200">
+                                <i data-lucide="trending-up" class="w-3.5 h-3.5 text-mint-600"></i>
+                                <span data-i18n="stage4Time">Stage 4 • Weekly Progress Tracker</span>
+                            </span>
+                            <span class="text-xs font-semibold text-slate-400">Copilot Studio</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2.5 text-center">
+                            <div class="bg-amber-50/70 border border-amber-100 rounded-2xl p-3">
+                                <div class="text-xl mb-1">🔥</div>
+                                <div id="statStreak" class="text-xl font-extrabold text-amber-800">4 Days</div>
+                                <div class="text-[11px] font-semibold text-amber-700/80 leading-tight mt-0.5" data-i18n="statStreakLabel">Morning Fruit Streak</div>
+                            </div>
+                            <div class="bg-mint-50/70 border border-mint-100 rounded-2xl p-3">
+                                <div class="text-xl mb-1">🥦</div>
+                                <div id="statVeggies" class="text-xl font-extrabold text-mint-800">9 Servings</div>
+                                <div class="text-[11px] font-semibold text-mint-700/80 leading-tight mt-0.5" data-i18n="statVeggiesLabel">Hidden Veggies Eaten</div>
+                            </div>
+                            <div class="bg-brand-50/70 border border-brand-100 rounded-2xl p-3">
+                                <div class="text-xl mb-1">💰</div>
+                                <div id="statSaved" class="text-xl font-extrabold text-brand-800">$14.50</div>
+                                <div class="text-[11px] font-semibold text-brand-700/80 leading-tight mt-0.5" data-i18n="statSavedLabel">Student Budget Saved</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: PROJECT VISION & MICROSOFT ARCHITECTURE -->
+        <div id="visionView" class="hidden fade-in space-y-6">
+            
+            <!-- Problem & Secret Formula Grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- The Problem -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-4">
+                        <i data-lucide="alert-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900 mb-3" data-i18n="probTitle">The Problem: The Daily Trap</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></span>
+                            <span data-i18n="prob1"><strong>Long hours away from home</strong> cause fatigue and sudden hunger during school or university.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></span>
+                            <span data-i18n="prob2"><strong>Fast food is chosen</strong> simply because it is quick, cheap, and flavorful.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></span>
+                            <span data-i18n="prob3"><strong>Healthy food is avoided</strong> as bland, expensive, and unfilling.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></span>
+                            <span data-i18n="prob4"><strong>Skipping morning nutrition</strong> ruins daily focus and classroom energy.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- The Secret Formula -->
+                <div class="bg-white rounded-3xl p-6 border border-brand-100 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900 mb-3" data-i18n="formulaTitle">The Secret Formula: Low-Cost & Delicious</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-600 mt-0.5 shrink-0"></i>
+                            <span data-i18n="form1"><strong>Low-Cost Local Ingredients:</strong> Nutrient-dense legumes, eggs, and seasonal local vegetables.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-600 mt-0.5 shrink-0"></i>
+                            <span data-i18n="form2"><strong>Hidden Veggies Technique:</strong> Savory, crunchy recipes that satisfy cravings while delivering full nutrition.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="check" class="w-4 h-4 text-brand-600 mt-0.5 shrink-0"></i>
+                            <span data-i18n="form3"><strong>Student Group Orders:</strong> Bundling student pre-orders from verified local home kitchens cuts meal costs by up to 50%.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Microsoft Cloud & AI Architecture -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-100 shadow-sm">
+                <div class="mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-600" data-i18n="archKicker">Technical Architecture</span>
+                    <h3 class="text-2xl font-extrabold text-slate-900 mt-1" data-i18n="archTitle">Powered by Microsoft Cloud & AI</h3>
+                </div>
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70">
+                        <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center mb-3">
+                            <i data-lucide="cpu" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Azure AI</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" data-i18n="azureDesc">
+                            Powers the Smart Craving & Budget Matcher to recommend personalized, low-cost, hidden-veggie meals in real time.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70">
+                        <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center mb-3">
+                            <i data-lucide="message-square-heart" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Copilot Studio</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" data-i18n="copilotDesc">
+                            Delivers friendly Morning Fruit Boost reminders, micro-health facts, and guided 10-minute home recipe steps.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
+                            <i data-lucide="store" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Power Apps</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" data-i18n="powerDesc">
+                            Connects students with verified local home-based kitchens and coordinates bundled group pre-orders seamlessly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact & Sustainability -->
+            <div class="bg-gradient-to-r from-brand-800 to-mint-800 text-white rounded-3xl p-6 sm:p-8 shadow-md">
+                <h3 class="text-xl sm:text-2xl font-extrabold mb-4" data-i18n="impactTitle">Social & Economic Sustainability</h3>
+                <div class="grid sm:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-4 border border-white/15">
+                        <div class="font-bold text-brand-200 mb-1" data-i18n="imp1Title">🎓 Student Focus & Energy</div>
+                        <p class="text-xs text-white/90 leading-relaxed" data-i18n="imp1Desc">Higher cognitive focus and sustained energy throughout long school and university schedules.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-4 border border-white/15">
+                        <div class="font-bold text-brand-200 mb-1" data-i18n="imp2Title">🥗 Automatic Healthy Habits</div>
+                        <p class="text-xs text-white/90 leading-relaxed" data-i18n="imp2Desc">Removes taste and cost barriers so healthy eating becomes an effortless daily routine.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-4 border border-white/15">
+                        <div class="font-bold text-brand-200 mb-1" data-i18n="imp3Title">🏡 Local Kitchen Empowerment</div>
+                        <p class="text-xs text-white/90 leading-relaxed" data-i18n="imp3Desc">Creates predictable group-order income for verified local home-based kitchens.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 px-4 text-center">
+        <p class="text-sm font-bold text-brand-800" data-i18n="footerMain">SANAD — Project Lead & Founder: Zina</p>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="footerSub">Microsoft Imagine Cup Submission • Health & Lifestyle Category</p>
+    </footer>
+
+    <!-- Interactive Toast / Order Confirmation Modal -->
+    <div id="toastModal" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden max-w-md w-[92%] bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 fade-in">
+        <div class="w-9 h-9 rounded-xl bg-brand-500/20 text-brand-300 flex items-center justify-center shrink-0">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 text-xs leading-relaxed" id="toastMessage"></div>
+        <button onclick="hideToast()" class="text-slate-400 hover:text-white p-1">
+            <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+    </div>
+
+    <script>
+        // State Management
+        let currentLang = 'en';
+        let currentCraving = 'crunchy';
+        let currentBudget = 2.5;
+        let streakCount = 4;
+        let veggiesCount = 9;
+        let savedAmount = 14.50;
+        let fruitCompletedToday = false;
+        let fruitIndex = 0;
+
+        // Morning Fruit Options
+        const fruitsData = [
+            {
+                emoji: '🍌',
+                cost: '~$0.25',
+                en: {
+                    name: "Today's Pick: Fresh Banana",
+                    benefit: "Slow-release natural energy & potassium to prevent mid-morning fatigue during long lectures."
+                },
+                ar: {
+                    name: "فاكهة اليوم: موزة طازجة",
+                    benefit: "طاقة طبيعية بطيئة الامتصاص وبوتاسيوم لمنع الإرهاق في منتصف اليوم الدراسي."
+                }
+            },
+            {
+                emoji: '🍎',
+                cost: '~$0.30',
+                en: {
+                    name: "Today's Pick: Crisp Local Apple",
+                    benefit: "Rich in fiber and natural hydration to keep blood sugar steady and sharpen morning focus."
+                },
+                ar: {
+                    name: "فاكهة اليوم: تفاحة طازجة",
+                    benefit: "غنية بالألياف والترطيب الطبيعي للحفاظ على تركيزكِ ونشاطكِ طوال الحصص الصباحية."
+                }
+            },
+            {
+                emoji: '🌴',
+                cost: '~$0.20',
+                en: {
+                    name: "Today's Pick: 3 Energy Dates",
+                    benefit: "Instant brain fuel packed with iron, magnesium, and natural sweetness before leaving home."
+                },
+                ar: {
+                    name: "فاكهة اليوم: 3 حبات تمر",
+                    benefit: "وقود فوري للدماغ غني بالحديد والمغنيسيوم يمنحكِ نشاطاً قبل الخروج من المنزل."
+                }
+            }
+        ];
+
+        // Healthy Hidden-Veggie Meals Database
+        const mealsDatabase = [
+            {
+                id: 'chickpea-bites',
+                craving: 'crunchy',
+                price: 1.50,
+                regularPrice: 3.00,
+                kitchen: 'Um Ahmed Home Kitchen',
+                kitchenAr: 'مطبخ أم أحمد المنزلي',
+                en: {
+                    name: 'Crispy Spiced Chickpea & Zucchini Bites',
+                    desc: 'Golden oven-baked crunchy bites packed with protein and finely grated hidden zucchini & carrots.',
+                    hiddenVeggies: 'Hidden Zucchini, Carrots & Parsley',
+                    recipeTime: '10 Mins • Pantry Ingredients',
+                    recipeSteps: [
+                        'Mash 1 cup canned chickpeas with 1/2 grated zucchini (squeezed dry), garlic powder, and cumin.',
+                        'Shape into small crunchy discs and brush lightly with olive oil.',
+                        'Pan-sear or air-fry for 7 minutes until golden and crispy.'
+                    ]
+                },
+                ar: {
+                    name: 'كرات الحمص والكوسا المقرمشة المتبلة',
+                    desc: 'قطع مقرمشة ومخبوزة غنية بالبروتين مع كوسا وجزر مبشور مخفي داخل الخلطة.',
+                    hiddenVeggies: 'خضار مخفية: كوسا، جزر، وبقدونس',
+                    recipeTime: '10 دقائق • مكونات متوفرة بالبيت',
+                    recipeSteps: [
+                        'اهرسي كوب حمص مسلوق مع نصف حبة كوسا مبشورة ومعصورة من الماء وكمون وثوم.',
+                        'شكّليها على هيئة أقراص صغيرة مقرمشة وامسحيها بقليل من زيت الزيتون.',
+                        'حمّريها في المقلاة أو القلاية الهوائية لمدة 7 دقائق حتى تصبح ذهبية ومقرمشة.'
+                    ]
+                }
+            },
+            {
+                id: 'spinach-muffins',
+                craving: 'crunchy',
+                price: 2.00,
+                regularPrice: 4.00,
+                kitchen: 'Dar Al-Afia Kitchen',
+                kitchenAr: 'مطبخ دار العافية',
+                en: {
+                    name: 'Savory Egg, Oat & Hidden-Spinach Muffins',
+                    desc: 'Fluffy, golden-topped savory muffins with blended fresh spinach and bell peppers.',
+                    hiddenVeggies: 'Hidden Spinach & Sweet Bell Peppers',
+                    recipeTime: '10 Mins • Mug / Pan Method',
+                    recipeSteps: [
+                        'Whisk 2 eggs with 2 tbsp rolled oats, chopped spinach, diced bell pepper, and a pinch of cheese.',
+                        'Pour into a greased non-stick pan or microwave-safe ramekin.',
+                        'Cook for 6–8 minutes until puffed, golden, and savory.'
+                    ]
+                },
+                ar: {
+                    name: 'مافن البيض والشوفان بالسبانخ المخفية',
+                    desc: 'فطائر مالحة ذهبية وهشة تحتوي على سبانخ طازجة وفلفل حلو مفروم ناعماً.',
+                    hiddenVeggies: 'خضار مخفية: سبانخ وفلفل حلو',
+                    recipeTime: '10 دقائق • تحضير سريع بالمقلاة',
+                    recipeSteps: [
+                        'اخفقي بيضتين مع ملعقتين شوفان، سبانخ مفرومة ناعماً، فلفل حلو، ورشة جبن.',
+                        'اسكبي الخليط في مقلاة صغيرة مدهونة بقليل من الزيت.',
+                        'اطهيها على نار هادئة لمدة 7 دقائق حتى تتماسك وتتحمر.'
+                    ]
+                }
+            },
+            {
+                id: 'lentil-wrap',
+                craving: 'filling',
+                price: 2.00,
+                regularPrice: 4.00,
+                kitchen: 'Beit Al-Khair Kitchen',
+                kitchenAr: 'مطبخ بيت الخير المنزلي',
+                en: {
+                    name: 'Warm Spiced Lentil & Roasted Veggie Wrap',
+                    desc: 'Hearty whole-wheat wrap filled with seasoned red lentils, mashed pumpkin, and tahini drizzle.',
+                    hiddenVeggies: 'Hidden Pumpkin & Tomatoes',
+                    recipeTime: '10 Mins • One-Pan Filling',
+                    recipeSteps: [
+                        'Simmer pre-cooked lentils with tomato paste, mashed pumpkin, cumin, and lemon juice for 5 mins.',
+                        'Spread warm mixture onto whole-wheat flatbread with a drizzle of tahini.',
+                        'Roll tightly and toast on the pan for 2 minutes until warm and filling.'
+                    ]
+                },
+                ar: {
+                    name: 'راب العدس المتبل والخضار الدافئ',
+                    desc: 'ساندويتش مشبع بخبز القمح الكامل محشو بالعدس المتبل والقرع المهروس مع صلصة الطحينة.',
+                    hiddenVeggies: 'خضار مخفية: قرع مهروس وطماطم',
+                    recipeTime: '10 دقائق • تحضير سريع',
+                    recipeSteps: [
+                        'سخّني العدس المسلوق مع ملعقة صلصة طماطم وقرع مهروس وكمون وعصير ليمون لمدة 5 دقائق.',
+                        'افردي الخليط الدافئ داخل خبز قمح كامل مع رشة طحينة.',
+                        'لفّي الساندويتش وحمّصيه على المقلاة لدقيقتين.'
+                    ]
+                }
+            },
+            {
+                id: 'veggie-shakshuka-bowl',
+                craving: 'filling',
+                price: 2.50,
+                regularPrice: 5.00,
+                kitchen: 'Um Salma Kitchen',
+                kitchenAr: 'مطبخ أم سلمى',
+                en: {
+                    name: 'Hearty Egg & Hidden-Cauliflower Skillet Bowl',
+                    desc: 'Rich tomato & herb sauce thickened with riced cauliflower and topped with two farm eggs.',
+                    hiddenVeggies: 'Hidden Riced Cauliflower & Tomatoes',
+                    recipeTime: '10 Mins • Single Skillet',
+                    recipeSteps: [
+                        'Sauté grated cauliflower and crushed tomatoes with garlic and paprika for 4 minutes.',
+                        'Crack 2 eggs directly into the rich veggie sauce and cover.',
+                        'Simmer for 5 minutes until eggs set; serve warm with whole bread.'
+                    ]
+                },
+                ar: {
+                    name: 'طاجن البيض بالقرنبيط المخفي والطماطم',
+                    desc: 'صلصة طماطم غنية بالأعشاب مع قرنبيط مبشور ناعماً وبيضتين طازجتين لوجبة مشبعة.',
+                    hiddenVeggies: 'خضار مخفية: قرنبيط مبشور وطماطم',
+                    recipeTime: '10 دقائق • مقلاة واحدة',
+                    recipeSteps: [
+                        'قلّبي القرنبيط المبشور ناعماً مع الطماطم المهروسة والثوم والبابريكا لمدة 4 دقائق.',
+                        'أضيفي بيضتين فوق الصلصة وغطّي المقلاة.',
+                        'اتركيها 5 دقائق حتى ينضج البيض وقدّميها دافئة.'
+                    ]
+                }
+            },
+            {
+                id: 'sweet-potato-bites',
+                craving: 'energy',
+                price: 1.00,
+                regularPrice: 2.00,
+                kitchen: 'Nour Healthy Kitchen',
+                kitchenAr: 'مطبخ نور الصحي',
+                en: {
+                    name: 'Golden Sweet Potato, Oat & Date Energy Balls',
+                    desc: 'Naturally sweet, zero-refined-sugar energy bites combining mashed sweet potato, oats, and dates.',
+                    hiddenVeggies: 'Hidden Sweet Potato & Cinnamon',
+                    recipeTime: '10 Mins • No-Bake Mix',
+                    recipeSteps: [
+                        'Mash 1/2 cup steamed sweet potato with 4 pitted dates and a pinch of cinnamon.',
+                        'Mix in 1/2 cup rolled oats until a firm dough forms.',
+                        'Roll into 6 bite-sized energy balls for instant study fuel.'
+                    ]
+                },
+                ar: {
+                    name: 'كرات الطاقة بالبطاطا الحلوة والشوفان والتمر',
+                    desc: 'كرات طاقة طبيعية بدون سكر مضاف تجمع بين البطاطا الحلوة المهروسة والشوفان والتمر.',
+                    hiddenVeggies: 'خضار مخفية: بطاطا حلوة وقرفة',
+                    recipeTime: '10 دقائق • بدون فرن',
+                    recipeSteps: [
+                        'اهرسي نصف كوب بطاطا حلوة مسلوقة مع 4 حبات تمر منزوعة النوى ورشة قرفة.',
+                        'أضيفي نصف كوب شوفان واخلطي حتى تتكون عجينة متماسكة.',
+                        'شكّليها إلى 6 كرات طاقة جاهزة للمذاكرة.'
+                    ]
+                }
+            },
+            {
+                id: 'cocoa-beet-smoothie',
+                craving: 'energy',
+                price: 1.50,
+                regularPrice: 3.00,
+                kitchen: 'Green Cup Home Bar',
+                kitchenAr: 'مطبخ الكوب الأخضر',
+                en: {
+                    name: 'Velvety Cocoa, Banana & Hidden-Beet Energy Shake',
+                    desc: 'Tastes like rich chocolate milk while boosting blood flow and stamina with steamed red beet.',
+                    hiddenVeggies: 'Hidden Red Beetroot',
+                    recipeTime: '5 Mins • Blender Ready',
+                    recipeSteps: [
+                        'Add 1 ripe banana, 2 small cubes of cooked red beet, and 1 tbsp raw cocoa powder to blender.',
+                        'Pour in 1 cup milk (or oat milk) and 1 date for natural sweetness.',
+                        'Blend for 45 seconds until smooth and creamy.'
+                    ]
+                },
+                ar: {
+                    name: 'سموذي الكاكاو والموز والشمندر المخفي',
+                    desc: 'بطعم الشوكولاتة الغني مع شمندر أحمر مطهو لتعزيز النشاط والتركيز الذهني.',
+                    hiddenVeggies: 'خضار مخفية: شمندر أحمر',
+                    recipeTime: '5 دقائق • بالخلاط',
+                    recipeSteps: [
+                        'ضعي موزة ناضجة مع قطعتين صغيرتين من الشمندر المسلوق وملعقة كاكاو خام في الخلاط.',
+                        'أضيفي كوب حليب وحبة تمر للتحلية الطبيعية.',
+                        'اخلطي لمدة 45 ثانية حتى يصبح القوام كريمياً.'
+                    ]
+                }
+            }
+        ];
+
+        // Translations Dictionary
+        const i18n = {
+            en: {
+                founderHeader: 'Founded by Zina',
+                techBadge: 'Powered by Microsoft Azure AI, Copilot Studio & Power Apps',
+                heroTitle: 'Making Healthy Eating Flavorful, Filling, and Affordable.',
+                heroDesc: 'An AI-powered student nutrition companion that builds effortless morning fruit habits and matches strict student budgets with delicious, hidden-veggie meals.',
+                founderCredit: 'Project Lead & Founder: Zina',
+                savingsBadge: 'Up to 50% Student Savings',
+                tabDemo: 'Interactive App Demo',
+                tabVision: 'Project Vision & Tech',
+                appJourneyLabel: 'Student Daily Journey',
+                aiActive: 'Azure AI Active',
+                appWelcome: 'Good Morning, Student! 👋',
+                appSub: 'Your smart, budget-friendly nutrition plan for today.',
+                stage1Time: 'Stage 1 • 7:30 AM — Morning Boost',
+                changeFruit: 'Switch Fruit',
+                whyMattersLabel: 'Why it matters today:',
+                fruitBtn: 'Done, I had my morning fruit',
+                fruitBtnDone: 'Morning Fruit Logged! (+1 Streak)',
+                stage2Time: 'Stages 2 & 3 • 12:30 PM — Craving & Budget Matcher',
+                matcherTitle: 'What are you craving right now?',
+                craveCrunchy: 'Crunchy & Savory',
+                craveFilling: 'Warm & Filling',
+                craveEnergy: 'Quick Energy',
+                budgetLabel: 'Max Student Budget:',
+                aiMatchesHeader: 'AI Matched Healthy Meals',
+                stage4Time: 'Stage 4 • Weekly Progress Tracker',
+                statStreakLabel: 'Morning Fruit Streak',
+                statVeggiesLabel: 'Hidden Veggies Eaten',
+                statSavedLabel: 'Student Budget Saved',
+                probTitle: 'The Problem: The Daily Trap',
+                prob1: '<strong>Long hours away from home</strong> cause fatigue and sudden hunger during school or university.',
+                prob2: '<strong>Fast food is chosen</strong> simply because it is quick, cheap, and flavorful.',
+                prob3: '<strong>Healthy food is avoided</strong> as bland, expensive, and unfilling.',
+                prob4: '<strong>Skipping morning nutrition</strong> ruins daily focus and classroom energy.',
+                formulaTitle: 'The Secret Formula: Low-Cost & Delicious',
+                form1: '<strong>Low-Cost Local Ingredients:</strong> Nutrient-dense legumes, eggs, and seasonal local vegetables.',
+                form2: '<strong>Hidden Veggies Technique:</strong> Savory, crunchy recipes that satisfy cravings while delivering full nutrition.',
+                form3: '<strong>Student Group Orders:</strong> Bundling student pre-orders from verified local home kitchens cuts meal costs by up to 50%.',
+                archKicker: 'Technical Architecture',
+                archTitle: 'Powered by Microsoft Cloud & AI',
+                azureDesc: 'Powers the Smart Craving & Budget Matcher to recommend personalized, low-cost, hidden-veggie meals in real time.',
+                copilotDesc: 'Delivers friendly Morning Fruit Boost reminders, micro-health facts, and guided 10-minute home recipe steps.',
+                powerDesc: 'Connects students with verified local home-based kitchens and coordinates bundled group pre-orders seamlessly.',
+                impactTitle: 'Social & Economic Sustainability',
+                imp1Title: '🎓 Student Focus & Energy',
+                imp1Desc: 'Higher cognitive focus and sustained energy throughout long school and university schedules.',
+                imp2Title: '🥗 Automatic Healthy Habits',
+                imp2Desc: 'Removes taste and cost barriers so healthy eating becomes an effortless daily routine.',
+                imp3Title: '🏡 Local Kitchen Empowerment',
+                imp3Desc: 'Creates predictable group-order income for verified local home-based kitchens.',
+                footerMain: 'SANAD — Project Lead & Founder: Zina',
+                footerSub: 'Microsoft Imagine Cup Submission • Health & Lifestyle Category',
+                optPreorder: 'Pre-Order (50% Group Discount)',
+                optRecipe: '10-Min Home Recipe',
+                groupSaveTag: '50% Group Order Off',
+                confirmOrderBtn: 'Confirm Student Pre-Order',
+                ingredientsTitle: 'Quick 10-Minute Steps:'
+            },
+            ar: {
+                founderHeader: 'تأسيس وتطوير: زينة (Zina)',
+                techBadge: 'مدعوم بتقنيات Microsoft Azure AI و Copilot Studio و Power Apps',
+                heroTitle: 'نجعل الأكل الصحي لذيذاً، مشبعاً، وفي متناول ميزانية الطالب.',
+                heroDesc: 'رفيق تغذية ذكي بالذكاء الاصطناعي يبني عادة الفاكهة الصباحية بسهولة، ويطابق ميزانية الطالب المحدودة مع وجبات شهية غنية بالخضار المخفية.',
+                founderCredit: 'قائدة ومؤسسة المشروع: زينة (Zina)',
+                savingsBadge: 'توفير يصل إلى 50% للطلاب',
+                tabDemo: 'تجربة التطبيق التفاعلية',
+                tabVision: 'رؤية المشروع والتقنية',
+                appJourneyLabel: 'رحلة الطالب اليومية',
+                aiActive: 'ذكاء Azure نشط',
+                appWelcome: 'صباح الخير يا بطل! 👋',
+                appSub: 'خطتك الغذائية الذكية والاقتصادية ليومك الدراسي.',
+                stage1Time: 'المرحلة 1 • 7:30 صباحاً — دفعة النشاط الصباحية',
+                changeFruit: 'تغيير الفاكهة',
+                whyMattersLabel: 'لماذا هي مهمة اليوم؟',
+                fruitBtn: 'تم، تناولت فاكهتي الصباحية',
+                fruitBtnDone: 'تم تسجيل فاكهة الصباح! (+1 يوم)',
+                stage2Time: 'المرحلتان 2 و 3 • 12:30 ظهراً — مطابق الرغبات والميزانية',
+                matcherTitle: 'ما الذي تشتهيه الآن؟',
+                craveCrunchy: 'مقرمش ومالح',
+                craveFilling: 'دافئ ومشبع',
+                craveEnergy: 'طاقة سريعة',
+                budgetLabel: 'أقصى ميزانية للطالب:',
+                aiMatchesHeader: 'وجبات صحية مقترحة بالذكاء الاصطناعي',
+                stage4Time: 'المرحلة 4 • متتبع العادات الأسبوعي',
+                statStreakLabel: 'سلسلة فاكهة الصباح',
+                statVeggiesLabel: 'حصص الخضار المخفية',
+                statSavedLabel: 'توفير ميزانية الطالب',
+                probTitle: 'المشكلة: فخ اليوم الدراسي الطويل',
+                prob1: '<strong>ساعات الدراسة الطويلة خارج المنزل</strong> تسبب الإرهاق والجوع المفاجئ.',
+                prob2: '<strong>يتم اختيار الوجبات السريعة</strong> لأنها سريعة ورخيصة وذات مذاق قوي.',
+                prob3: '<strong>يتم تجنب الأكل الصحي</strong> لاعتباره مكلفاً وغير مشبع أو بلا طعم.',
+                prob4: '<strong>إهمال التغذية الصباحية</strong> يضعف التركيز والطاقة طوال اليوم.',
+                formulaTitle: 'المعادلة السرية: لذيذ واقتصادي',
+                form1: '<strong>مكونات محلية اقتصادية:</strong> البقوليات، البيض، والخضار الموسمية عالية القيمة الغذائية.',
+                form2: '<strong>تقنية الخضار المخفية:</strong> وصفات مقرمشة وشهية تُشبع الرغبة وتمنح الجسم كامل الفائدة.',
+                form3: '<strong>طلبات الطلاب الجماعية:</strong> تجميع طلبات الطلاب من المطابخ المنزلية الموثوقة يخفض التكلفة بنسبة 50%.',
+                archKicker: 'البنية التقنية للمشروع',
+                archTitle: 'مدعوم بسحابة وذكاء مايكروسوفت',
+                azureDesc: 'يشغّل مطابق الرغبات والميزانية لاقتراح وجبات صحية اقتصادية مخصصة في لحظات.',
+                copilotDesc: 'يقدّم تذكيرات الفاكهة الصباحية، الحقائق الصحية السريعة، وخطوات الوصفات المنزلية ذات الـ 10 دقائق.',
+                powerDesc: 'يربط الطلاب بالمطابخ المنزلية المحلية الموثوقة وينسق الطلبات الجماعية المخفضة.',
+                impactTitle: 'الأثر الاجتماعي والاستدامة الاقتصادية',
+                imp1Title: '🎓 تركيز وطاقة أعلى للطلاب',
+                imp1Desc: 'تحسين التركيز الذهني والنشاط المستمر خلال ساعات المدرسة والجامعة الطويلة.',
+                imp2Title: '🥗 عادات صحية تلقائية',
+                imp2Desc: 'إزالة عوائق السعر والطعم ليصبح الأكل الصحي روتيناً يومياً سهلاً.',
+                imp3Title: '🏡 دعم المطابخ المنزلية المحلية',
+                imp3Desc: 'توفير دخل مستدام ومنتظم للمطابخ المنزلية المحلية الموثوقة عبر الطلبات الجماعية.',
+                footerMain: 'مشروع سند (SANAD) — مؤسسة وقائدة المشروع: زينة (Zina)',
+                footerSub: 'مشاركة مسابقة Microsoft Imagine Cup • فئة الصحة ونمط الحياة',
+                optPreorder: 'طلب مسبق (خصم 50%)',
+                optRecipe: 'وصفة منزلية في 10 دقائق',
+                groupSaveTag: 'خصم 50% للطلبات الجماعية',
+                confirmOrderBtn: 'تأكيد الطلب المسبق للطالب',
+                ingredientsTitle: 'خطوات التحضير السريع (10 دقائق):'
+            }
+        };
+
+        // Initialize Icons & Render
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderFruit();
+            renderMeals();
+        });
+
+        // Switch Language (EN / AR)
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            const htmlEl = document.documentElement;
+            htmlEl.setAttribute('lang', currentLang);
+            htmlEl.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langLabel').textContent = currentLang === 'en' ? 'العربية' : 'English';
+
+            // Update static texts
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerHTML = i18n[currentLang][key];
+                }
+            });
+
+            if (fruitCompletedToday) {
+                document.getElementById('fruitBtnText').textContent = i18n[currentLang].fruitBtnDone;
+            }
+
+            updateStatsUI();
+            renderFruit();
+            renderMeals();
+            lucide.createIcons();
+        }
+
+        // Switch Main View Tabs
+        function switchMainView(view) {
+            const demoView = document.getElementById('demoView');
+            const visionView = document.getElementById('visionView');
+            const tabDemoBtn = document.getElementById('tabDemoBtn');
+            const tabVisionBtn = document.getElementById('tabVisionBtn');
+
+            if (view === 'demo') {
+                demoView.classList.remove('hidden');
+                visionView.classList.add('hidden');
+                tabDemoBtn.className = 'flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-brand-600 text-white shadow-sm transition';
+                tabVisionBtn.className = 'flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 text-slate-700 hover:bg-white/70 transition';
+            } else {
+                demoView.classList.add('hidden');
+                visionView.classList.remove('hidden');
+                tabVisionBtn.className = 'flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-brand-600 text-white shadow-sm transition';
+                tabDemoBtn.className = 'flex-1 md:w-52 px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 text-slate-700 hover:bg-white/70 transition';
+            }
+            lucide.createIcons();
+        }
+
+        // Morning Fruit Functions
+        function cycleFruit() {
+            fruitIndex = (fruitIndex + 1) % fruitsData.length;
+            renderFruit();
+        }
+
+        function renderFruit() {
+            const f = fruitsData[fruitIndex];
+            document.getElementById('fruitEmoji').textContent = f.emoji;
+            document.getElementById('fruitCost').textContent = f.cost;
+            document.getElementById('fruitName').textContent = f[currentLang].name;
+            document.getElementById('fruitBenefit').textContent = f[currentLang].benefit;
+        }
+
+        function completeMorningFruit() {
+            if (!fruitCompletedToday) {
+                fruitCompletedToday = true;
+                streakCount += 1;
+                updateStatsUI();
+                const btn = document.getElementById('fruitDoneBtn');
+                btn.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+                btn.classList.add('bg-mint-600', 'hover:bg-mint-700');
+                document.getElementById('fruitBtnText').textContent = i18n[currentLang].fruitBtnDone;
+                showToast(
+                    currentLang === 'en'
+                        ? 'Awesome! Morning fruit logged. Your daily focus boost is active!'
+                        : 'رائع! تم تسجيل فاكهة الصباح وتعزيز نشاطكِ الذهني لليوم!'
+                );
+            } else {
+                showToast(
+                    currentLang === 'en'
+                        ? 'Already logged for today! Keep up the great streak.'
+                        : 'تم تسجيل فاكهة اليوم بالفعل! استمري في هذا الالتزام الرائع.'
+                );
+            }
+        }
+
+        // Craving & Budget Matcher Functions
+        function selectCraving(craving) {
+            currentCraving = craving;
+            document.querySelectorAll('.craving-pill').forEach(btn => {
+                btn.className = 'craving-pill p-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-bold flex flex-col items-center gap-1.5 transition';
+            });
+            const activeBtn = document.getElementById(`craving-${craving}`);
+            activeBtn.className = 'craving-pill p-3 rounded-xl border-2 border-brand-600 bg-brand-50 text-brand-900 text-xs font-bold flex flex-col items-center gap-1.5 transition';
+            renderMeals();
+        }
+
+        function updateBudget(val) {
+            currentBudget = parseFloat(val);
+            document.getElementById('budgetDisplay').textContent = `$${currentBudget.toFixed(2)}`;
+            renderMeals();
+        }
+
+        function renderMeals() {
+            const container = document.getElementById('mealsContainer');
+            const filtered = mealsDatabase.filter(m => m.craving === currentCraving && m.price <= currentBudget);
+            const t = i18n[currentLang];
+
+            document.getElementById('matchCountBadge').textContent =
+                currentLang === 'en' ? `${filtered.length} Match${filtered.length === 1 ? '' : 'es'}` : `${filtered.length} خيارات مناسبة`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 text-center text-xs text-amber-800 font-medium">
+                        ${currentLang === 'en'
+                            ? 'Try sliding your student budget slightly higher ($1.50+) to unlock more freshly prepared meals!'
+                            : 'جرّبي رفع الميزانية قليلاً ($1.50 أو أكثر) لعرض المزيد من الوجبات الصحية!'}
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(meal => {
+                const m = meal[currentLang];
+                const kitchenName = currentLang === 'en' ? meal.kitchen : meal.kitchenAr;
+                return `
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 transition hover:border-brand-300">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                            <div>
+                                <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-mint-100 text-mint-800 mb-1">
+                                    🥗 ${m.hiddenVeggies}
+                                </span>
+                                <h4 class="font-extrabold text-slate-900 text-sm sm:text-base">${m.name}</h4>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <span class="text-base font-extrabold text-brand-700">$${meal.price.toFixed(2)}</span>
+                                <span class="block text-[11px] text-slate-400 line-through">$${meal.regularPrice.toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">${m.desc}</p>
+
+                        <!-- Fulfillment Mode Toggle Buttons -->
+                        <div class="grid grid-cols-2 gap-2 mb-3">
+                            <button onclick="switchMealOption('${meal.id}', 'order')" id="btn-order-${meal.id}" class="py-2 px-2.5 rounded-xl text-xs font-bold bg-brand-600 text-white transition">
+                                ${t.optPreorder}
+                            </button>
+                            <button onclick="switchMealOption('${meal.id}', 'diy')" id="btn-diy-${meal.id}" class="py-2 px-2.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition">
+                                ${t.optRecipe}
+                            </button>
+                        </div>
+
+                        <!-- Option 1: Pre-Order Panel -->
+                        <div id="panel-order-${meal.id}" class="bg-white rounded-xl p-3 border border-brand-100 flex items-center justify-between gap-3">
+                            <div class="text-xs">
+                                <div class="font-bold text-slate-800 flex items-center gap-1">
+                                    <i data-lucide="home" class="w-3.5 h-3.5 text-brand-600"></i>
+                                    <span>${kitchenName}</span>
+                                </div>
+                                <span class="text-[11px] text-mint-700 font-semibold">${t.groupSaveTag}</span>
+                            </div>
+                            <button onclick="placePreOrder('${meal.id}')" class="px-3.5 py-2 rounded-xl bg-mint-600 hover:bg-mint-700 text-white text-xs font-bold shadow-xs transition shrink-0 active:scale-95">
+                                ${t.confirmOrderBtn}
+                            </button>
+                        </div>
+
+                        <!-- Option 2: 10-Min DIY Recipe Panel (Hidden initially) -->
+                        <div id="panel-diy-${meal.id}" class="hidden bg-white rounded-xl p-3.5 border border-amber-200/80 text-xs space-y-2">
+                            <div class="font-bold text-amber-800 flex items-center justify-between">
+                                <span>${t.ingredientsTitle}</span>
+                                <span class="text-[11px] bg-amber-50 px-2 py-0.5 rounded-md">${m.recipeTime}</span>
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600 leading-relaxed">
+                                ${m.recipeSteps.map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function switchMealOption(mealId, mode) {
+            const orderPanel = document.getElementById(`panel-order-${mealId}`);
+            const diyPanel = document.getElementById(`panel-diy-${mealId}`);
+            const orderBtn = document.getElementById(`btn-order-${mealId}`);
+            const diyBtn = document.getElementById(`btn-diy-${mealId}`);
+
+            if (mode === 'order') {
+                orderPanel.classList.remove('hidden');
+                diyPanel.classList.add('hidden');
+                orderBtn.className = 'py-2 px-2.5 rounded-xl text-xs font-bold bg-brand-600 text-white transition';
+                diyBtn.className = 'py-2 px-2.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition';
+            } else {
+                orderPanel.classList.add('hidden');
+                diyPanel.classList.remove('hidden');
+                diyBtn.className = 'py-2 px-2.5 rounded-xl text-xs font-bold bg-amber-600 text-white transition';
+                orderBtn.className = 'py-2 px-2.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition';
+            }
+        }
+
+        function placePreOrder(mealId) {
+            const meal = mealsDatabase.find(m => m.id === mealId);
+            if (!meal) return;
+            const saved = meal.regularPrice - meal.price;
+            savedAmount += saved;
+            veggiesCount += 2;
+            updateStatsUI();
+
+            const mealName = meal[currentLang].name;
+            showToast(
+                currentLang === 'en'
+                    ? `Group Pre-Order Confirmed: "${mealName}" for $${meal.price.toFixed(2)} (You saved $${saved.toFixed(2)}!).`
+                    : `تم تأكيد الطلب الجماعي: "${mealName}" بسعر $${meal.price.toFixed(2)} (وفّرتِ $${saved.toFixed(2)}!).`
+            );
+        }
+
+        function updateStatsUI() {
+            document.getElementById('statStreak').textContent = currentLang === 'en' ? `${streakCount} Days` : `${streakCount} أيام`;
+            document.getElementById('statVeggies').textContent = currentLang === 'en' ? `${veggiesCount} Servings` : `${veggiesCount} حصص`;
+            document.getElementById('statSaved').textContent = `$${savedAmount.toFixed(2)}`;
+        }
+
+        let toastTimer;
+        function showToast(msg) {
+            const toast = document.getElementById('toastModal');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('hidden');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4500);
+        }
+
+        function hideToast() {
+            document.getElementById('toastModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
